@@ -9,18 +9,23 @@
 
 .Calculator {
   font-family: 'digital-7-mono-italic';
-  font-size: 2.5em;
   position: absolute;
   top: 0;
   left: 0;
-  border: thick double #32a1ce;;
+  border: thick double #32a1ce;
+  padding: 2px;
 }
 
 .displayPanel {
   border: solid black;
-  background-color: gray
+  display: flex;
+  align-items: center; 
+  justify-content: flex-end;
 }
 
 .button {
   border: solid black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

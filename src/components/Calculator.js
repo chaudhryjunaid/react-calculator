@@ -4,79 +4,165 @@ import _ from 'lodash';
 class Calculator extends Component {
 	constructor(props) {
 		super(props);
-		this.getDisplayHeight = this.getDisplayHeight.bind(this);
 		this.getGridSize = this.getGridSize.bind(this);
 		this.getUnitSize = this.getUnitSize.bind(this);
-		this.translateButtonCoordinates = this.translateButtonCoordinates.bind(this);
-	}
-	getDisplayHeight() {
-		let displayMemoryHeight = this.props.displayLayout.memory.height;
-		let displayResultHeight = this.props.displayLayout.result.height;
-		return displayMemoryHeight + displayResultHeight;
+		this.getCSS = this.getCSS.bind(this);
+
+		this.state = {
+			layoutDefaults: {
+				height: 1,
+				width: 1,
+				backgroundColor: 'cyan',
+				className: 'button'
+			},
+			layout: [{
+				text: 'Expression',
+				x: 0,
+				y: 0,
+				width: 4,
+				className: 'displayPanel',
+				backgroundColor: 'gray'
+			}, {
+        text: 'Result',
+        x: 0,
+        y: 1,
+        width: 4,
+        height: 2,
+        className: 'displayPanel',
+				backgroundColor: 'yellow'
+      }, {
+        text: 'C',
+        x: 0,
+        y: 3,
+				backgroundColor: 'green'
+      }, {
+        text: '+/-',
+        x: 1,
+        y: 3,
+				backgroundColor: 'green'
+      }, {
+        text: '%',
+        x: 2,
+        y: 3,
+				backgroundColor: 'green'
+      }, {
+        text: '/',
+        x: 3,
+        y: 3,
+				backgroundColor: 'orange'
+      }, {
+        text: '7',
+        x: 0,
+        y: 4
+      }, {
+        text: '8',
+        x: 1,
+        y: 4
+      }, {
+        text: '9',
+        x: 2,
+        y: 4
+      }, {
+        text: '*',
+        x: 3,
+        y: 4,
+				backgroundColor: 'orange'
+      }, {
+        text: '4',
+        x: 0,
+        y: 5
+      }, {
+        text: '5',
+        x: 1,
+        y: 5
+      }, {
+        text: '6',
+        x: 2,
+        y: 5
+      }, {
+        text: '-',
+        x: 3,
+        y: 5,
+				backgroundColor: 'orange'
+      }, {
+        text: '1',
+        x: 0,
+        y: 6
+      }, {
+        text: '2',
+        x: 1,
+        y: 6
+      }, {
+        text: '3',
+        x: 2,
+        y: 6
+      }, {
+        text: '+',
+        x: 3,
+        y: 6,
+				backgroundColor: 'orange'
+      }, {
+        text: '0',
+        x: 0,
+        y: 7,
+        width: 2
+      }, {
+        text: '.',
+        x: 2,
+        y: 7
+      }, {
+        text: '=',
+        x: 3,
+        y: 7,
+				backgroundColor: 'orange'
+      }]
+    };
 	}
 	getGridSize() {
-		let displayRows = this.getDisplayHeight();
-		let maxButtonX = _.reduce(this.props.buttonLayout, (max, button) => {
-			console.log('$$', button);
+		let maxX = _.reduce(this.state.layout, (max, button) => {
+			button = _.defaults({}, button, this.state.layoutDefaults);
 			let currentValue = button.x + button.width;
 			return max > currentValue ? max : currentValue;
 		}, 0);
-		let maxButtonY = _.reduce(this.props.buttonLayout, (max, button) => {
+		let maxY = _.reduce(this.state.layout, (max, button) => {
+			button = _.defaults({}, button, this.state.layoutDefaults);
 			let currentValue = button.y + button.height;
 			return max > currentValue ? max : currentValue;
 		}, 0);
 
-		return {columns: maxButtonX, rows: maxButtonY + displayRows};
+		return {cols: maxX, rows: maxY};
 	}
 	getUnitSize() {
 		let gridSize = this.getGridSize();
 		return {
 			height: this.props.height / gridSize.rows,
-			width: this.props.width / gridSize.columns
+			width: this.props.width / gridSize.cols
 		};
 	}
-	translateButtonCoordinates(button) {
-		let displayHeight = this.getDisplayHeight();
-		return {
-			x: button.x,
-			y: button.y + displayHeight,
-			height: button.height,
-			width: button.width
-		}
-	}
-	getCSSPosition({x, y, height, width}) {
+	getCSS({x, y, height, width, backgroundColor, text}) {
 		let unitSize = this.getUnitSize();
+		let textFactor = text.length > 10 ? text.length * 0.05 + 1 : 1;
 		return {
+			position: 'absolute',
 			top: `${unitSize.height * y}px`,
 			left: `${unitSize.width * x}px`,
 			height: `${unitSize.height * height}px`,
-			width: `${unitSize.width * width}px`
+			width: `${unitSize.width * width}px`,
+			fontSize: `${unitSize.height * height * 0.05 / textFactor}em`,
+			backgroundColor
 		};
 	}
   render() {
-  	let gridSize = this.getGridSize();
-    return (
+  	return (
       <div className="Calculator" style={{height: this.props.height, width: this.props.width}}>
-        <div className="displayPanel" style={{backgroundColor: 'yellow', position: 'absolute', ...this.getCSSPosition({
-        	x: 0,
-        	y: 0, 
-        	height: this.props.displayLayout.memory.height,
-        	width: gridSize.columns
-        })}}>Memory</div>
-        <div className="displayPanel" style={{backgroundColor: 'green', position: 'absolute', ...this.getCSSPosition({
-        	x: 0,
-        	y: this.props.displayLayout.memory.height, 
-        	height: this.props.displayLayout.result.height,
-        	width: gridSize.columns
-        })}}>Result</div>
-        {this.props.buttonLayout.map(button => (
-        	<div className="button" style={{backgroundColor: 'cyan', position: 'absolute', ...this.getCSSPosition({
-        		x: button.x,
-        		y: button.y + this.getDisplayHeight(), 
-        		height: button.height,
-        		width: button.width
-        	})}}>{button.text}</div>
-        ))}
+        {this.state.layout.map((item, key) => {
+        	let fatItem = _.defaults({}, item, this.state.layoutDefaults);
+        	return (
+        		<div key={key} className={fatItem.className} style={{
+	        		...this.getCSS(fatItem)
+	        	}}>{fatItem.text}</div>
+        	)}
+        )}
       </div>
     );
   }
