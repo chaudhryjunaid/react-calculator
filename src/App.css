@@ -13,9 +13,14 @@
   position: absolute;
   top: 0;
   left: 0;
-  border: 5px blue;
+  border: thick double #32a1ce;;
 }
 
 .displayPanel {
+  border: solid black;
   background-color: gray
+}
+
+.button {
+  border: solid black;
 }
