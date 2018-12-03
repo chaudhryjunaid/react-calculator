@@ -1,3 +1,21 @@
+@font-face {
+  font-family: 'digital-7-mono-italic';
+  src: local('digital-7-mono-italic'), url(./fonts/digital-7-mono-italic.ttf) format('truetype');
+}
+
 .App {
-  text-align: center;
+  background-color: red
+}
+
+.Calculator {
+  font-family: 'digital-7-mono-italic';
+  font-size: 2.5em;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: 5px blue;
+}
+
+.displayPanel {
+  background-color: gray
 }
