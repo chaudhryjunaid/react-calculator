@@ -4,28 +4,67 @@
 }
 
 .App {
-  background-color: red
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .Calculator {
   font-family: 'digital-7-mono-italic';
-  position: absolute;
-  top: 0;
-  left: 0;
-  border: thick double #32a1ce;
-  padding: 2px;
+  display: grid;
+  grid-template-areas: 1fr 1fr 1fr 1fr / 1fr 1fr 1fr 1fr 1fr;
+  /*grid-gap: 15px;*/
 }
 
-.displayPanel {
-  border: solid black;
+.contextPanel {
+  grid-area: 1 / 1 / span 1 / span 4;
   display: flex;
   align-items: center; 
   justify-content: flex-end;
+  border-top: solid black;
+  border-left: solid black;
+  border-right: solid black;
+  font-size: 2.5em;
+}
+
+.resultPanel {
+  grid-area: 2 / 1 / span 2 / span 4;
+  display: flex;
+  align-items: center; 
+  justify-content: flex-end;
+  background-color: yellow;
+  border-top: solid black;
+  border-left: solid black;
+  border-right: solid black;
+  font-size: 4em;
 }
 
 .button {
-  border: solid black;
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: cyan;
+  border-top: solid black;
+  border-left: solid black;
+  font-size: 2.5em;
+}
+
+.orange {
+  background-color: orange;
+}
+
+.white {
+  background-color: white;
+}
+
+.zero {
+  grid-column: 1 / span 2;
+}
+
+.right-side-button {
+  border-right: solid black;
+}
+
+.bottom-button {
+  border-bottom: solid black;
 }

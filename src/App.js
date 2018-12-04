@@ -8,7 +8,7 @@ class App extends Component {
       <div className="App">
         <Calculator 
           height={400}
-          width={400}
+          width={600}
         />
       </div>
     );
