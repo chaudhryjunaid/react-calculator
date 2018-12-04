@@ -71,7 +71,7 @@ class Calculator extends Component {
 				});	
 			}
 		}
-		if (isNaN(action)) {
+		if (isNaN(action) && action !== '.') {
 			if (this.isUnary(action)) {
 				return this.setState({
 			 		result: this.handleUnaryOperation(this.state.result, action)
@@ -104,7 +104,7 @@ class Calculator extends Component {
       	width: this.props.width,
       	fontSize: `${this.props.width / 12}px`
       }}>
-        <div className="contextPanel">{this.state.context} {this.state.operator}</div>
+        <div className="contextPanel">{this.state.context ? this.state.context : 'READY'} {this.state.operator}</div>
         <div className="resultPanel">{this.state.result}</div>
         <div className="button white" onClick={this.handleClick}>AC</div>
         <div className="button orange" onClick={this.handleClick}>+/-</div>
