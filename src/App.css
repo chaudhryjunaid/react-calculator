@@ -24,7 +24,7 @@
   border-top: solid black;
   border-left: solid black;
   border-right: solid black;
-  font-size: 2.5em;
+  font-size: 1.2em;
 }
 
 .resultPanel {
@@ -36,7 +36,7 @@
   border-top: solid black;
   border-left: solid black;
   border-right: solid black;
-  font-size: 4em;
+  font-size: 1.7em;
 }
 
 .button {
@@ -46,7 +46,7 @@
   background-color: cyan;
   border-top: solid black;
   border-left: solid black;
-  font-size: 2.5em;
+  font-size: 1.2em;
 }
 
 .orange {

@@ -7,7 +7,7 @@ class App extends Component {
     return (
       <div className="App">
         <Calculator 
-          height={400}
+          height={600}
           width={600}
         />
       </div>
